@@ -498,6 +498,7 @@ namespace DefensiveMapTriggers_RA2
         }
         public static string IntToWayPoint(int i)
         {
+            i++;
             int first = i / 26;
             int second = i % 26;
 
@@ -505,8 +506,8 @@ namespace DefensiveMapTriggers_RA2
             string ss = "";
 
             if (first != 0)
-                fs = Cha(Asc("A") + first).ToString();
-            ss = Cha(Asc("A") + second).ToString();
+                fs = Cha(Asc("A") - 1 + first).ToString();
+            ss = Cha(Asc("A") - 1 + second).ToString();
             return fs + ss;
         }
         private static int Asc(string s)
@@ -573,7 +574,7 @@ namespace DefensiveMapTriggers_RA2
             startF.WriteInIni();
 
             int endI = GetIndex();
-            var endA = new Action(endI, new List<string> { "24,0,0,0,0,0,0,A", $"27,0,{winTime},0,0,0,0,A", "103,4,Name:InvasionEnd,0,0,0,0,A", "23,0,0,0,0,0,0,A" });
+            var endA = new Action(endI, new List<string> { "24,0,0,0,0,0,0,A", $"27,0,{winTime},0,0,0,0,A", "103,4,Name:InvasionEnd,0,0,0,0,A", "23,0,0,0,0,0,0,A" , "19,7,NukeSiren,0,0,0,0,A", "11,4,Name:InvasionStarted,0,0,0,0,A" });
             var endE = new Event(endI, new List<string> { $"13,0,{startTime}" });
             var endT = new Trigger(endI, "end invasion timer");
             var endF = new FullTrigger(endA, endE, endT, 0);
