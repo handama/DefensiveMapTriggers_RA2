@@ -402,7 +402,8 @@ namespace DefensiveMapTriggers_RA2
 
                 if (Chronosphere)
                     full.Action.value.Add($"107,1,{Program.GetIndexString(team.index)},0,0,0,0,{Program.IntToWayPoint(StartWaypoint[i])}");
-
+                else if (RecruitFromExistingUnits)
+                    full.Action.value.Add($"4,1,{Program.GetIndexString(team.index)},0,0,0,0,");
                 else
                     full.Action.value.Add($"7,1,{Program.GetIndexString(team.index)},0,0,0,0,A"); 
             }
@@ -418,16 +419,17 @@ namespace DefensiveMapTriggers_RA2
             var fullE = new FullTrigger(actionE, eventE, triggerE, 0);
             fullE.WriteInIni();
 
-            int disableI = Program.GetIndex();
-            var disableActVal = new List<string> { $"54,2,{Program.GetIndexString(attackI)},0,0,0,0,A" };
-            var actionD = new Action(disableI, disableActVal);
-            var disableEveVal = new List<string> { $"13,0,{StartTime + RepeatTimes * CycleTime + 1}" };
-            var eventD = new Event(disableI, disableEveVal);
-            var triggerD = new Trigger(disableI, "disable " + name);
-            var fullD = new FullTrigger(actionD, eventD, triggerD, 0);
-            fullD.WriteInIni();
-
-            
+            if (RepeatTimes>0)
+            {
+                int disableI = Program.GetIndex();
+                var disableActVal = new List<string> { $"54,2,{Program.GetIndexString(attackI)},0,0,0,0,A" };
+                var actionD = new Action(disableI, disableActVal);
+                var disableEveVal = new List<string> { $"13,0,{StartTime + RepeatTimes * CycleTime + 1}" };
+                var eventD = new Event(disableI, disableEveVal);
+                var triggerD = new Trigger(disableI, "disable " + name);
+                var fullD = new FullTrigger(actionD, eventD, triggerD, 0);
+                fullD.WriteInIni();
+            }
         }
     }
     static class Program
