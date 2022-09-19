@@ -500,7 +500,7 @@ namespace DefensiveMapTriggers_RA2
         }
         public static string IntToWayPoint(int i)
         {
-            i++;
+            
             int first = i / 26;
             int second = i % 26;
 
@@ -508,8 +508,8 @@ namespace DefensiveMapTriggers_RA2
             string ss = "";
 
             if (first != 0)
-                fs = Cha(Asc("A") - 1 + first).ToString();
-            ss = Cha(Asc("A") - 1 + second).ToString();
+                fs = Cha(Asc("A") -1 + first).ToString();
+            ss = Cha(Asc("A") + second).ToString();
             return fs + ss;
         }
         private static int Asc(string s)
@@ -543,9 +543,56 @@ namespace DefensiveMapTriggers_RA2
         static void Main(string[] args)
         {
             Settings = new IniFile("settings.ini");
-            var general = Settings.GetSection("General");
-
             Output = new IniFile();
+
+            defensive();
+
+            if (File.Exists("output.ini"))
+                File.Delete("output.ini");
+            Output.WriteIniFile("output.ini");
+        }
+
+        static void CountPlayerNumber()
+        {
+            Output.AddSection("Actions");
+            Output.AddSection("Events");
+            Output.AddSection("Tags");
+            Output.AddSection("Triggers");
+            Index = 30000;
+
+            for (int i = 0; i < 8; i++)
+            {
+                int giveToAI = GetIndex();
+                var giveToAA = new Action(giveToAI, new List<string> { $"14,0,{4475+i},0,0,0,0,A"});
+                var igiveToAE = new Event(giveToAI, new List<string> { "8,0,0" });
+                var giveToAT = new Trigger(giveToAI, $"Give to Player {i+1} (for counting use)");
+                giveToAT.house = "Special";
+                var giveToAF = new FullTrigger(giveToAA, igiveToAE, giveToAT, 0);
+                giveToAF.WriteInIni();
+
+                int countwaitI = GetIndex();
+                var countwaitA = new Action(countwaitI, new List<string> { $"53,2,{GetIndexString(countwaitI+2)},0,0,0,0,A" });
+                var countwaitE = new Event(countwaitI, new List<string> { $"13,0,{i+1}" });
+                var countwaitT = new Trigger(countwaitI, $"Count Player Delay {i+1}");
+                countwaitT.house = "Special";
+                var countwaitF = new FullTrigger(countwaitA, countwaitE, countwaitT, 0);
+                countwaitF.WriteInIni();
+
+                int countI = GetIndex();
+                var countA = new Action(countI, new List<string> { $"11,4,{8-i}Player(s),0,0,0,0,A", $"12,2,{GetIndexString(30004)},0,0,0,0,A", $"12,2,{GetIndexString(30010)},0,0,0,0,A", $"12,2,{GetIndexString(30016)},0,0,0,0,A", $"12,2,{GetIndexString(30022)},0,0,0,0,A", $"12,2,{GetIndexString(30028)},0,0,0,0,A", $"12,2,{GetIndexString(30034)},0,0,0,0,A", $"12,2,{GetIndexString(30040)},0,0,0,0,A", $"12,2,{GetIndexString(30046)},0,0,0,0,A" });
+                var countE = new Event(countI, new List<string> { $"15,0,{8 - i}" });
+                var countT = new Trigger(countI, $"Count Player {8 - i}",disabled:true);
+                countT.house = "Special";
+                var countF = new FullTrigger(countA, countE, countT, 0);
+                countF.WriteInIni();
+            }
+
+
+        }
+
+        static void defensive()
+        {
+            var general = Settings.GetSection("General");
 
             Output.AddSection("Actions");
             Output.AddSection("Events");
@@ -576,7 +623,7 @@ namespace DefensiveMapTriggers_RA2
             startF.WriteInIni();
 
             int endI = GetIndex();
-            var endA = new Action(endI, new List<string> { "24,0,0,0,0,0,0,A", $"27,0,{winTime},0,0,0,0,A", "103,4,Name:InvasionEnd,0,0,0,0,A", "23,0,0,0,0,0,0,A" , "19,7,NukeSiren,0,0,0,0,A", "11,4,Name:InvasionStarted,0,0,0,0,A" });
+            var endA = new Action(endI, new List<string> { "24,0,0,0,0,0,0,A", $"27,0,{winTime},0,0,0,0,A", "103,4,Name:InvasionEnd,0,0,0,0,A", "23,0,0,0,0,0,0,A", "19,7,NukeSiren,0,0,0,0,A", "11,4,Name:InvasionStarted,0,0,0,0,A" });
             var endE = new Event(endI, new List<string> { $"13,0,{startTime}" });
             var endT = new Trigger(endI, "end invasion timer");
             var endF = new FullTrigger(endA, endE, endT, 0);
@@ -593,7 +640,7 @@ namespace DefensiveMapTriggers_RA2
             }
 
             if (winTime > 0)
-            { 
+            {
                 int win1I = GetIndex();
                 var win1av = new List<string> { $"119,0,{houseindex},0,0,0,0,A" };
                 var win1action = new Action(win1I, win1av);
@@ -612,9 +659,6 @@ namespace DefensiveMapTriggers_RA2
                 var win2full = new FullTrigger(win2action, win2event, win2trigger, 0);
                 win2full.WriteInIni();
             }
-            if (File.Exists("output.ini"))
-                File.Delete("output.ini");
-            Output.WriteIniFile("output.ini");
         }
     }
 }
