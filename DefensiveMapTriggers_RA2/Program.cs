@@ -209,7 +209,7 @@ namespace DefensiveMapTriggers_RA2
         {
             string index = Program.GetIndexString(this.index);
             var teamIndex = Program.Output.GetSection("TeamTypes");
-            teamIndex.AddKey(Program.GetIniIndex("TeamTypes"), index);
+            teamIndex.AddKey(Program.GetIniIndex("TeamTypes", "team"), index);
 
             Program.Output.AddSection(index);
             var team = Program.Output.GetSection(index);
@@ -272,7 +272,7 @@ namespace DefensiveMapTriggers_RA2
         {
             string index = Program.GetIndexString(this.index);
             var taskIndex = Program.Output.GetSection("TaskForces");
-            taskIndex.AddKey(Program.GetIniIndex("TaskForces"), index);
+            taskIndex.AddKey(Program.GetIniIndex("TaskForces", "task"), index);
 
             Program.Output.AddSection(index);
             var task = Program.Output.GetSection(index);
@@ -304,7 +304,7 @@ namespace DefensiveMapTriggers_RA2
         {
             string index = Program.GetIndexString(this.index);
             var scriptIndex = Program.Output.GetSection("ScriptTypes");
-            scriptIndex.AddKey(Program.GetIniIndex("ScriptTypes"), index);
+            scriptIndex.AddKey(Program.GetIniIndex("ScriptTypes", "script"), index);
 
             Program.Output.AddSection(index);
             var script = Program.Output.GetSection(index);
@@ -473,7 +473,7 @@ namespace DefensiveMapTriggers_RA2
             string index = string.Format("{0:D7}", i);
             return index;
         }
-        public static string GetIniIndex(string name)
+        public static string GetIniIndex(string name, string prefix = "")
         {
             string index = "";
             var section = Output.GetSection(name);
@@ -481,7 +481,7 @@ namespace DefensiveMapTriggers_RA2
             int i = 0;
             while (!end)
             {
-                if (section.KeyExists(i.ToString()))
+                if (section.KeyExists(prefix + i.ToString()))
                 {
                     i++;
                 }
@@ -491,7 +491,7 @@ namespace DefensiveMapTriggers_RA2
                     index = i.ToString();
                 }
             }
-            return index;
+            return prefix + index;
         }
         public static int GetIndex()
         {
