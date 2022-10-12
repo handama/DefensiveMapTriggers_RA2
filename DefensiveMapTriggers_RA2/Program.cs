@@ -329,6 +329,7 @@ namespace DefensiveMapTriggers_RA2
         int VeteranLevel;
         bool AvoidThreats;
         bool Suicide;
+        bool Aggressive;
         bool Droppod;
         bool Chronosphere;
         bool Full;
@@ -356,6 +357,7 @@ namespace DefensiveMapTriggers_RA2
             VeteranLevel = section.GetIntValue("VeteranLevel", 0);
             AvoidThreats = section.GetBooleanValue("AvoidThreats", false);
             Suicide = section.GetBooleanValue("Suicide", false);
+            Aggressive = section.GetBooleanValue("Aggressive", false);
             Droppod = section.GetBooleanValue("Droppod", false);
             Chronosphere = section.GetBooleanValue("Chronosphere", false);
             Full = section.GetBooleanValue("Full", false);
@@ -392,6 +394,7 @@ namespace DefensiveMapTriggers_RA2
                 team.VeteranLevel = VeteranLevel;
                 team.AvoidThreats = AvoidThreats;
                 team.Suicide = Suicide;
+                team.Aggressive = Aggressive;
                 team.Droppod = Droppod;
                 team.Full = Full;
                 team.House = Program.AttackHouse;
