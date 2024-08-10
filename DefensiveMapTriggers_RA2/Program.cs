@@ -611,14 +611,14 @@ namespace DefensiveMapTriggers_RA2
             var startTime = general.GetIntValue("StartTime", 120);
             string houseindex = HouseNameToIndex();
 
-            int initialI = GetIndex();
+/*            int initialI = GetIndex();
             var initialA = new Action(initialI, new List<string> { $"14,0,{houseindex},0,0,0,0,A", $"121,0,{houseindex},0,0,0,0,A" });
             var initialE = new Event(initialI, new List<string> { "13,0,0" });
             var initialT = new Trigger(initialI, "destroy invader MCV and give buildings");
             var initialF = new FullTrigger(initialA, initialE, initialT, 0);
-            initialF.WriteInIni();
+            initialF.WriteInIni();*/
 
-            int startI = GetIndex();
+/*            int startI = GetIndex();
             var startA = new Action(startI, new List<string> { $"27,0,{startTime},0,0,0,0,A", "103,4,Name:InvasionStart,0,0,0,0,A", "23,0,0,0,0,0,0,A" });
             var startE = new Event(startI, new List<string> { "13,0,0" });
             var startT = new Trigger(startI, "start invasion timer");
@@ -630,7 +630,7 @@ namespace DefensiveMapTriggers_RA2
             var endE = new Event(endI, new List<string> { $"13,0,{startTime}" });
             var endT = new Trigger(endI, "end invasion timer");
             var endF = new FullTrigger(endA, endE, endT, 0);
-            endF.WriteInIni();
+            endF.WriteInIni();*/
 
             var sections = Settings.GetSections();
             foreach (var sec in sections)
@@ -642,7 +642,7 @@ namespace DefensiveMapTriggers_RA2
                 }
             }
 
-            if (winTime > 0)
+/*            if (winTime > 0)
             {
                 int win1I = GetIndex();
                 var win1av = new List<string> { $"119,0,{houseindex},0,0,0,0,A" };
@@ -661,7 +661,7 @@ namespace DefensiveMapTriggers_RA2
                 var win2trigger = new Trigger(win2I, "forcefully end game");
                 var win2full = new FullTrigger(win2action, win2event, win2trigger, 0);
                 win2full.WriteInIni();
-            }
+            }*/
         }
     }
 }
